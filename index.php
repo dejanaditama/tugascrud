@@ -1,80 +1,62 @@
 <!DOCTYPE html>
 <html>
-<html>
-<title>Halaman Awal Operasi CRUD</TITLE>
-<style>
-div.container {
-	width: 100%;
-	border 1px solid gray;
-}
-header, footer {
-	padding: 1cm;
-	color: white;
-	background-color: black;
-	clear: left;
-	text-align: center;
-	}
-	
-nav {
-	float: left;
-	max-width: 160px;
-	margin: 0;
-	padding: 1cm;
-}
-nav ul {
-	list-style-type: none;
-	padding: 0;
-}
-nav ul a {
-	text-decoration: none;
-}
-artikle{
-margin-left: 170px;
-berder-left: 1px colid gray;
-padding :1px;   
-overflow; hidden;
-}
-</style>
+<head>
+	<title>Operasi CRUD</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+	<div class="judul">		
+		<h1>Operasi CRUD</h1>
+		<h2>Alamat Dokter</h2>
+		<h3>by : Aditama.Project</h3>
+	</div>
+	<br/>
 
-<div class-"container">
-<header> 
-<h1><a href ="index.php">Operasi CRUD</a></h1>
-</header>
+	<?php 
+	if(isset($_GET['pesan'])){
+		$pesan = $_GET['pesan'];
+		if($pesan == "input"){
+			echo "Data berhasil di input.";
+		}else if($pesan == "update"){
+			echo "Data berhasil di update.";
+		}else if($pesan == "hapus"){
+			echo "Data berhasil di hapus.";
+		}
+	}
+	?>
+	<br/>
+	<a class="tombol" href="tambah.php">+ Tambah Data Baru</a>
 
-<nav>
-	<ul>
-	<li><b>MENU</b></li>
-	<li><a href ="#">Menu 1</a></li>
-	<li><a href ="#">Menu 2</a></li>
-	<li><a href ="#">Menu 3</a></li>
-
-	</ul>
-</nav>
-
-	</nav>
-	<article>
-		<table border="1" width="75%" align="center">
+	<h3>Data user</h3>
+	<table border="1" class="table">
+		<tr>
+			<th>No</th>
+			<th>Nama</th>
+			<th>Alamat</th>
+			<th>No Telepon</th>
+			<th>Opsi</th>		
+		</tr>
+		<?php 
+		include "koneksi.php";
+		$query_mysql = mysql_query("SELECT * FROM user")or die(mysql_error());
+		$nomor = 1;
+		while($data = mysql_fetch_array($query_mysql)){
+		?>
+		<tr>
+			<td><?php echo $nomor++; ?></td>
+			<td><?php echo $data['nama']; ?></td>
+			<td><?php echo $data['alamat']; ?></td>
+			<td><?php echo $data['no_telp']; ?></td>
 			<td>
-				<th><a href="Tambah.php"><button type="submit">+ TAMBAH</button></a></th>
+				<a href="edit.php?id=<?php echo $data['id']; ?>">Edit</a> |
+				<a href="hapus.php?id=<?php echo $data['id']; ?>">Hapus</a>
 			</td>
-			<td>
-				<th><a href="edit.php"><button type="submit">+ EDIT</button></a></th>
-			</td>
-			<tr>
-				<td>No</td>
-				<td>Nama</td>
-				<td>Nim</td>
-				<td>Alamat</td>
-				<td>Aksi</td>
-			</tr>
-		</table>
-	</article>
-
-<footer>
+		</tr>
+		<?php } ?>
+	</table>
+	<br></br>
+<div class="footer">
 <h2>Dejan Aditama 14.111.121</h2>
-</footer>
 </div>
 </body>
 </html>
